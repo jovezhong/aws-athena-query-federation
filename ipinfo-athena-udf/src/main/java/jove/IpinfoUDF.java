@@ -30,8 +30,14 @@ public class IpinfoUDF extends UserDefinedFunctionHandler {
 
     private static final String SOURCE_TYPE = "Jove";
 
+    private IPinfo ipInfo;
+
     public IpinfoUDF() {
         super(SOURCE_TYPE);
+        ipInfo = new IPinfo.Builder()
+            .setToken(System.getenv("IPINFO_TOKEN"))
+            .setCache(new SimpleCache(Duration.ofDays(5)))
+            .build();
     }
 
     /**
@@ -41,12 +47,12 @@ public class IpinfoUDF extends UserDefinedFunctionHandler {
      * @return the ip info
      */
     public String ip_lookup(String input) throws RateLimitedException {
-        IPinfo ipInfo = new IPinfo.Builder()
-            .setToken("YOUR TOKEN")
-            .setCache(new SimpleCache(Duration.ofDays(5)))
-            .build();
-        IPResponse response = ipInfo.lookupIP("8.8.8.8");
+        IPResponse response = ipInfo.lookupIP(input);
 
         return response.toString();
+    }
+
+    public static void main(String[] args) throws RateLimitedException {
+        System.out.println(new IpinfoUDF().ip_lookup("8.8.8.8"));
     }
 }
