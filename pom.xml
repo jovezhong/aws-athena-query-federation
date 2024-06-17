@@ -1,215 +1,427 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.amazonaws</groupId>
-    <artifactId>aws-athena-query-federation</artifactId>
-    <packaging>pom</packaging>
-    <version>2022.47.1</version>
-    <name>AWS Athena Query Federation</name>
-    <description>The Amazon Athena Query Federation SDK allows you to customize Amazon Athena with your own code.</description>
-    <url>https://github.com/awslabs/aws-athena-query-federation</url>
-    <properties>
-        <!-- Uncomment to target java 8 -->
-        <!--<maven.compiler.release>8</maven.compiler.release>-->
-        <maven.compiler.release>11</maven.compiler.release>
-        <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
-        <!--- to meet engine version 1.12.533-->
-        <aws-sdk.version>1.12.739</aws-sdk.version>
-        <aws.lambda-java-core.version>1.2.2</aws.lambda-java-core.version>
-        <aws.lambda-java-log4j2.version>1.6.0</aws.lambda-java-log4j2.version>
-        <aws-cdk.version>1.204.0</aws-cdk.version>
-        <jsii.version>1.99.0</jsii.version>
-        <!--- to meet engine version 2.0.7-->
-        <slf4j-log4j.version>2.0.13</slf4j-log4j.version>
-        <mockito.version>4.11.0</mockito.version>
-        <junit.version>4.13.2</junit.version>
-        <jqwik.version>1.8.5</jqwik.version>
-        <assertj.version>3.26.0</assertj.version>
-        <testng.version>7.10.2</testng.version>
-         <!--- to meet engine version 2.12.6 -->
-        <fasterxml.jackson.version>2.17.1</fasterxml.jackson.version>
-        <surefire.failsafe.version>3.2.5</surefire.failsafe.version>
-        <log4j2Version>2.23.1</log4j2Version>
-        <apache.arrow.version>13.0.0</apache.arrow.version>
-        <guava.version>33.2.1-jre</guava.version>
-        <protobuf3.version>3.25.3</protobuf3.version>
-        <antlr.st4.version>4.3.4</antlr.st4.version>
-        <log4j2.cachefile.transformer.version>2.15</log4j2.cachefile.transformer.version>
-        <apache.httpclient.version>4.5.14</apache.httpclient.version>
-        <mssql.jdbc.version>12.7.0.jre11-preview</mssql.jdbc.version>
-        <commons.cli.version>1.8.0</commons.cli.version>
-        <spark.version>3.2.1</spark.version>
-        <test.system.rules.version>1.19.0</test.system.rules.version>
-        <!-- These are mvn on purpose to not conflict with the maven.* namespace -->
-        <mvn.checkstyle.version>3.4.0</mvn.checkstyle.version>
-        <mvn.shade.plugin.version>3.6.0</mvn.shade.plugin.version>
-        <mvn.source.plugin.version>3.3.1</mvn.source.plugin.version>
-        <mvn.javadoc.plugin.version>3.7.0</mvn.javadoc.plugin.version>
-        <mvn.jar.plugin.version>3.4.1</mvn.jar.plugin.version>
-        <doclint>none</doclint>
-    </properties>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.junit</groupId>
-                <artifactId>junit-bom</artifactId>
-                <version>5.10.2</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-    <organization>
-        <name>Amazon Web Services</name>
-        <url>https://https://aws.amazon.com//</url>
-    </organization>
-    <inceptionYear>2019</inceptionYear>
-    <licenses>
-        <license>
-            <name>Apache License 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-    <developers>
-        <developer>
-            <id>amazonwebservices</id>
-            <organization>Amazon Web Services</organization>
-            <organizationUrl>https://aws.amazon.com</organizationUrl>
-            <roles>
-                <role>developer</role>
-            </roles>
-        </developer>
-    </developers>
-    <scm>
-        <connection>scm:git@github.com:awslabs/aws-athena-query-federation.git</connection>
-        <url>https://github.com/awslabs/aws-athena-query-federation</url>
-        <tag>HEAD</tag>
-    </scm>
-    <modules>
-        <module>athena-federation-sdk</module>
-        <module>athena-federation-sdk-tools</module>
-        <module>athena-federation-integ-test</module>
-        <module>athena-cloudwatch</module>
-        <module>athena-cloudwatch-metrics</module>
-        <module>athena-dynamodb</module>
-        <module>athena-aws-cmdb</module>
-        <module>athena-docdb</module>
-        <module>athena-redis</module>
-        <module>athena-hbase</module>
-        <module>athena-example</module>
-        <module>athena-elasticsearch</module>
-        <module>athena-tpcds</module>
-        <module>athena-jdbc</module>
-        <module>athena-mysql</module>
-        <module>athena-postgresql</module>
-        <module>athena-redshift</module>
-        <module>athena-udfs</module>
-        <module>athena-vertica</module>
-        <module>athena-timestream</module>
-        <module>athena-neptune</module>
-        <module>athena-google-bigquery</module>
-        <module>athena-oracle</module>
-        <module>athena-sqlserver</module>
-        <module>athena-synapse</module>
-        <module>athena-datalakegen2</module>
-        <module>athena-snowflake</module>
-        <module>athena-teradata</module>
-        <module>athena-saphana</module>
-        <module>athena-cloudera-hive</module>
-        <module>athena-cloudera-impala</module>
-        <module>athena-hortonworks-hive</module>
-        <module>athena-db2</module>
-        <module>athena-db2-as400</module>
-        <module>athena-msk</module>
-        <module>athena-kafka</module>
-        <module>athena-gcs</module>
-    </modules>
+      
+  <modelVersion>4.0.0</modelVersion>
+      
+  <groupId>com.amazonaws</groupId>
+      
+  <artifactId>aws-athena-query-federation</artifactId>
+      
+  <packaging>pom</packaging>
+      
+  <version>2022.47.1</version>
+      
+  <name>AWS Athena Query Federation</name>
+      
+  <description>The Amazon Athena Query Federation SDK allows you to customize Amazon Athena with your own code.</description>
+      
+  <url>https://github.com/awslabs/aws-athena-query-federation</url>
+      
+  <properties>
+            
+    <!-- Uncomment to target java 8 -->
+            
+    <!--<maven.compiler.release>8</maven.compiler.release>-->
+            
+    <maven.compiler.release>11</maven.compiler.release>
+            
+    <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
+            
+    <!--- to meet engine version 1.12.533-->
+            
+    <aws-sdk.version>1.12.739</aws-sdk.version>
+            
+    <aws.lambda-java-core.version>1.2.2</aws.lambda-java-core.version>
+            
+    <aws.lambda-java-log4j2.version>1.6.0</aws.lambda-java-log4j2.version>
+            
+    <aws-cdk.version>1.204.0</aws-cdk.version>
+            
+    <jsii.version>1.99.0</jsii.version>
+            
+    <!--- to meet engine version 2.0.7-->
+            
+    <slf4j-log4j.version>2.0.13</slf4j-log4j.version>
+            
+    <mockito.version>4.11.0</mockito.version>
+            
+    <junit.version>4.13.2</junit.version>
+            
+    <jqwik.version>1.8.5</jqwik.version>
+            
+    <assertj.version>3.26.0</assertj.version>
+            
+    <testng.version>7.10.2</testng.version>
+             
+    <!--- to meet engine version 2.12.6 -->
+            
+    <fasterxml.jackson.version>2.17.1</fasterxml.jackson.version>
+            
+    <surefire.failsafe.version>3.2.5</surefire.failsafe.version>
+            
+    <log4j2Version>2.23.1</log4j2Version>
+            
+    <apache.arrow.version>13.0.0</apache.arrow.version>
+            
+    <guava.version>33.2.1-jre</guava.version>
+            
+    <protobuf3.version>3.25.3</protobuf3.version>
+            
+    <antlr.st4.version>4.3.4</antlr.st4.version>
+            
+    <log4j2.cachefile.transformer.version>2.15</log4j2.cachefile.transformer.version>
+            
+    <apache.httpclient.version>4.5.14</apache.httpclient.version>
+            
+    <mssql.jdbc.version>12.7.0.jre11-preview</mssql.jdbc.version>
+            
+    <commons.cli.version>1.8.0</commons.cli.version>
+            
+    <spark.version>3.2.1</spark.version>
+            
+    <test.system.rules.version>1.19.0</test.system.rules.version>
+            
+    <!-- These are mvn on purpose to not conflict with the maven.* namespace -->
+            
+    <mvn.checkstyle.version>3.4.0</mvn.checkstyle.version>
+            
+    <mvn.shade.plugin.version>3.6.0</mvn.shade.plugin.version>
+            
+    <mvn.source.plugin.version>3.3.1</mvn.source.plugin.version>
+            
+    <mvn.javadoc.plugin.version>3.7.0</mvn.javadoc.plugin.version>
+            
+    <mvn.jar.plugin.version>3.4.1</mvn.jar.plugin.version>
+            
+    <doclint>none</doclint>
+        
+  </properties>
+      
+  <dependencyManagement>
+            
     <dependencies>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>${fasterxml.jackson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-cbor</artifactId>
-            <version>${fasterxml.jackson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>${fasterxml.jackson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${fasterxml.jackson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>${fasterxml.jackson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.jqwik</groupId>
-            <artifactId>jqwik</artifactId>
-            <version>${jqwik.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>${assertj.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.vintage</groupId>
-            <artifactId>junit-vintage-engine</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>${mockito.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.testng/testng -->
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>${testng.version}</version>
-            <scope>test</scope>
-        </dependency>
+                  
+      <dependency>
+                        
+        <groupId>org.junit</groupId>
+                        
+        <artifactId>junit-bom</artifactId>
+                        
+        <version>5.10.2</version>
+                        
+        <type>pom</type>
+                        
+        <scope>import</scope>
+                    
+      </dependency>
+              
     </dependencies>
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <version>3.6.1</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-        <plugins>
-            <!--<plugin>
+        
+  </dependencyManagement>
+      
+  <organization>
+            
+    <name>Amazon Web Services</name>
+            
+    <url>https://https://aws.amazon.com//</url>
+        
+  </organization>
+      
+  <inceptionYear>2019</inceptionYear>
+      
+  <licenses>
+            
+    <license>
+                  
+      <name>Apache License 2.0</name>
+                  
+      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+                  
+      <distribution>repo</distribution>
+              
+    </license>
+        
+  </licenses>
+      
+  <developers>
+            
+    <developer>
+                  
+      <id>amazonwebservices</id>
+                  
+      <organization>Amazon Web Services</organization>
+                  
+      <organizationUrl>https://aws.amazon.com</organizationUrl>
+                  
+      <roles>
+                        
+        <role>developer</role>
+                    
+      </roles>
+              
+    </developer>
+        
+  </developers>
+      
+  <scm>
+            
+    <connection>scm:git@github.com:awslabs/aws-athena-query-federation.git</connection>
+            
+    <url>https://github.com/awslabs/aws-athena-query-federation</url>
+            
+    <tag>HEAD</tag>
+        
+  </scm>
+      
+  <modules>
+            
+    <module>athena-federation-sdk</module>
+            
+    <module>athena-federation-sdk-tools</module>
+            
+    <module>athena-federation-integ-test</module>
+            
+    <module>athena-cloudwatch</module>
+            
+    <module>athena-cloudwatch-metrics</module>
+            
+    <module>athena-dynamodb</module>
+            
+    <module>athena-aws-cmdb</module>
+            
+    <module>athena-docdb</module>
+            
+    <module>athena-redis</module>
+            
+    <module>athena-hbase</module>
+            
+    <module>athena-example</module>
+            
+    <module>athena-elasticsearch</module>
+            
+    <module>athena-tpcds</module>
+            
+    <module>athena-jdbc</module>
+            
+    <module>athena-mysql</module>
+            
+    <module>athena-postgresql</module>
+            
+    <module>athena-redshift</module>
+            
+    <module>athena-udfs</module>
+            
+    <module>athena-vertica</module>
+            
+    <module>athena-timestream</module>
+            
+    <module>athena-neptune</module>
+            
+    <module>athena-google-bigquery</module>
+            
+    <module>athena-oracle</module>
+            
+    <module>athena-sqlserver</module>
+            
+    <module>athena-synapse</module>
+            
+    <module>athena-datalakegen2</module>
+            
+    <module>athena-snowflake</module>
+            
+    <module>athena-teradata</module>
+            
+    <module>athena-saphana</module>
+            
+    <module>athena-cloudera-hive</module>
+            
+    <module>athena-cloudera-impala</module>
+            
+    <module>athena-hortonworks-hive</module>
+            
+    <module>athena-db2</module>
+            
+    <module>athena-db2-as400</module>
+            
+    <module>athena-msk</module>
+            
+    <module>athena-kafka</module>
+            
+    <module>athena-gcs</module>
+          
+    <module>ipinfo-athena-udf</module>
+      
+  </modules>
+      
+  <dependencies>
+            
+    <dependency>
+                  
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+                  
+      <artifactId>jackson-datatype-jsr310</artifactId>
+                  
+      <version>${fasterxml.jackson.version}</version>
+              
+    </dependency>
+            
+    <dependency>
+                  
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+                  
+      <artifactId>jackson-dataformat-cbor</artifactId>
+                  
+      <version>${fasterxml.jackson.version}</version>
+              
+    </dependency>
+            
+    <dependency>
+                  
+      <groupId>com.fasterxml.jackson.core</groupId>
+                  
+      <artifactId>jackson-core</artifactId>
+                  
+      <version>${fasterxml.jackson.version}</version>
+              
+    </dependency>
+            
+    <dependency>
+                  
+      <groupId>com.fasterxml.jackson.core</groupId>
+                  
+      <artifactId>jackson-databind</artifactId>
+                  
+      <version>${fasterxml.jackson.version}</version>
+              
+    </dependency>
+            
+    <dependency>
+                  
+      <groupId>com.fasterxml.jackson.core</groupId>
+                  
+      <artifactId>jackson-annotations</artifactId>
+                  
+      <version>${fasterxml.jackson.version}</version>
+              
+    </dependency>
+            
+    <dependency>
+                  
+      <groupId>net.jqwik</groupId>
+                  
+      <artifactId>jqwik</artifactId>
+                  
+      <version>${jqwik.version}</version>
+                  
+      <scope>test</scope>
+              
+    </dependency>
+            
+    <dependency>
+                  
+      <groupId>org.assertj</groupId>
+                  
+      <artifactId>assertj-core</artifactId>
+                  
+      <version>${assertj.version}</version>
+                  
+      <scope>test</scope>
+              
+    </dependency>
+            
+    <dependency>
+                  
+      <groupId>org.junit.jupiter</groupId>
+                  
+      <artifactId>junit-jupiter-api</artifactId>
+                  
+      <scope>test</scope>
+              
+    </dependency>
+            
+    <dependency>
+                  
+      <groupId>junit</groupId>
+                  
+      <artifactId>junit</artifactId>
+                  
+      <version>${junit.version}</version>
+                  
+      <scope>test</scope>
+              
+    </dependency>
+            
+    <dependency>
+                  
+      <groupId>org.junit.jupiter</groupId>
+                  
+      <artifactId>junit-jupiter-engine</artifactId>
+                  
+      <scope>test</scope>
+              
+    </dependency>
+            
+    <dependency>
+                  
+      <groupId>org.junit.vintage</groupId>
+                  
+      <artifactId>junit-vintage-engine</artifactId>
+                  
+      <scope>test</scope>
+              
+    </dependency>
+            
+    <dependency>
+                  
+      <groupId>org.mockito</groupId>
+                  
+      <artifactId>mockito-core</artifactId>
+                  
+      <version>${mockito.version}</version>
+                  
+      <scope>test</scope>
+              
+    </dependency>
+            
+    <!-- https://mvnrepository.com/artifact/org.testng/testng -->
+            
+    <dependency>
+                  
+      <groupId>org.testng</groupId>
+                  
+      <artifactId>testng</artifactId>
+                  
+      <version>${testng.version}</version>
+                  
+      <scope>test</scope>
+              
+    </dependency>
+        
+  </dependencies>
+      
+  <build>
+            
+    <pluginManagement>
+                  
+      <plugins>
+                        
+        <plugin>
+                              
+          <groupId>org.apache.maven.plugins</groupId>
+                              
+          <artifactId>maven-dependency-plugin</artifactId>
+                              
+          <version>3.6.1</version>
+                          
+        </plugin>
+                    
+      </plugins>
+              
+    </pluginManagement>
+            
+    <plugins>
+                  
+      <!--<plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
                 <version>8.0.1</version>
@@ -221,220 +433,437 @@
                     </execution>
                 </executions>
             </plugin>-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>${mvn.shade.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <artifactSet>
-                                <excludes>
-                                    <exclude>classworlds:classworlds</exclude>
-                                    <exclude>junit:junit</exclude>
-                                    <exclude>jmock:*</exclude>
-                                    <exclude>*:xml-apis</exclude>
-                                    <exclude>org.apache.maven:lib:tests</exclude>
-                                    <exclude>java.*</exclude>
-                                </excludes>
-                            </artifactSet>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.12</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <!-- attached to Maven test phase -->
-                    <execution>
-                        <id>report</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${mvn.checkstyle.version}</version>
+                  
+      <plugin>
+                        
+        <groupId>org.apache.maven.plugins</groupId>
+                        
+        <artifactId>maven-shade-plugin</artifactId>
+                        
+        <version>${mvn.shade.plugin.version}</version>
+                        
+        <executions>
+                              
+          <execution>
+                                    
+            <phase>package</phase>
+                                    
+            <goals>
+                                          
+              <goal>shade</goal>
+                                      
+            </goals>
+                                    
+            <configuration>
+                                          
+              <artifactSet>
+                                                
+                <excludes>
+                                                      
+                  <exclude>classworlds:classworlds</exclude>
+                                                      
+                  <exclude>junit:junit</exclude>
+                                                      
+                  <exclude>jmock:*</exclude>
+                                                      
+                  <exclude>*:xml-apis</exclude>
+                                                      
+                  <exclude>org.apache.maven:lib:tests</exclude>
+                                                      
+                  <exclude>java.*</exclude>
+                                                  
+                </excludes>
+                                            
+              </artifactSet>
+                                      
+            </configuration>
+                                
+          </execution>
+                          
+        </executions>
+                    
+      </plugin>
+                  
+      <plugin>
+                        
+        <groupId>org.jacoco</groupId>
+                        
+        <artifactId>jacoco-maven-plugin</artifactId>
+                        
+        <version>0.8.12</version>
+                        
+        <executions>
+                              
+          <execution>
+                                    
+            <goals>
+                                          
+              <goal>prepare-agent</goal>
+                                      
+            </goals>
+                                
+          </execution>
+                              
+          <!-- attached to Maven test phase -->
+                              
+          <execution>
+                                    
+            <id>report</id>
+                                    
+            <phase>test</phase>
+                                    
+            <goals>
+                                          
+              <goal>report</goal>
+                                      
+            </goals>
+                                
+          </execution>
+                          
+        </executions>
+                    
+      </plugin>
+                  
+      <plugin>
+                        
+        <groupId>org.apache.maven.plugins</groupId>
+                        
+        <artifactId>maven-checkstyle-plugin</artifactId>
+                        
+        <version>${mvn.checkstyle.version}</version>
+                        
+        <configuration>
+                              
+          <configLocation>checkstyle.xml</configLocation>
+                              
+          <encoding>UTF-8</encoding>
+                              
+          <consoleOutput>true</consoleOutput>
+                              
+          <failsOnError>true</failsOnError>
+                              
+          <linkXRef>false</linkXRef>
+                          
+        </configuration>
+                        
+        <executions>
+                              
+          <execution>
+                                    
+            <id>validate</id>
+                                    
+            <phase>validate</phase>
+                                    
+            <goals>
+                                          
+              <goal>check</goal>
+                                      
+            </goals>
+                                
+          </execution>
+                          
+        </executions>
+                    
+      </plugin>
+                  
+      <plugin>
+                        
+        <groupId>org.codehaus.mojo</groupId>
+                        
+        <artifactId>license-maven-plugin</artifactId>
+                        
+        <version>2.4.0</version>
+                        
+        <configuration>
+                              
+          <verbose>false</verbose>
+                              
+          <addSvnKeyWords>false</addSvnKeyWords>
+                              
+          <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
+                          
+        </configuration>
+                        
+        <executions>
+                              
+          <execution>
+                                    
+            <id>first</id>
+                                    
+            <goals>
+                                          
+              <goal>update-file-header</goal>
+                                      
+            </goals>
+                                    
+            <phase>process-sources</phase>
+                                    
+            <configuration>
+                                          
+              <licenseName>apache_v2</licenseName>
+                                          
+              <roots>
+                                                
+                <root>src/main/java</root>
+                                                
+                <root>src/test</root>
+                                            
+              </roots>
+                                      
+            </configuration>
+                                
+          </execution>
+                          
+        </executions>
+                    
+      </plugin>
+                  
+      <plugin>
+                        
+        <artifactId>maven-compiler-plugin</artifactId>
+                        
+        <version>${maven.compiler.plugin.version}</version>
+                        
+        <configuration>
+                              
+          <!-- required if you want to report source code names of property method parameters -->
+                              
+          <compilerArgs>
+                                    
+            <arg>-parameters</arg>
+                                
+          </compilerArgs>
+                          
+        </configuration>
+                    
+      </plugin>
+                  
+      <plugin>
+                        
+        <groupId>org.apache.maven.plugins</groupId>
+                        
+        <artifactId>maven-surefire-plugin</artifactId>
+                        
+        <version>${surefire.failsafe.version}</version>
+                        
+        <configuration>
+                              
+          <excludes>
+                                    
+            <exclude>*IntegTest</exclude>
+                                
+          </excludes>
+                          
+        </configuration>
+                    
+      </plugin>
+                  
+      <plugin>
+                        
+        <groupId>org.apache.maven.plugins</groupId>
+                        
+        <artifactId>maven-failsafe-plugin</artifactId>
+                        
+        <version>${surefire.failsafe.version}</version>
+                        
+        <configuration>
+                              
+          <forkCount>3C</forkCount>
+                              
+          <reuseForks>false</reuseForks>
+                              
+          <includes>
+                                    
+            <include>*IntegTest</include>
+                                
+          </includes>
+                          
+        </configuration>
+                    
+      </plugin>
+                  
+      <plugin>
+                        
+        <groupId>org.apache.maven.plugins</groupId>
+                        
+        <artifactId>maven-javadoc-plugin</artifactId>
+                        
+        <version>${mvn.javadoc.plugin.version}</version>
+                        
+        <configuration>
+                              
+          <failOnError>false</failOnError>
+                              
+          <notimestamp>true</notimestamp>
+                          
+        </configuration>
+                    
+      </plugin>
+              
+    </plugins>
+        
+  </build>
+      
+  <profiles>
+            
+    <profile>
+                  
+      <id>release</id>
+                  
+      <distributionManagement>
+                        
+        <snapshotRepository>
+                              
+          <id>ossrh</id>
+                              
+          <url>https://aws.oss.sonatype.org/content/repositories/snapshots</url>
+                          
+        </snapshotRepository>
+                        
+        <repository>
+                              
+          <id>ossrh</id>
+                              
+          <url>https://aws.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                          
+        </repository>
+                    
+      </distributionManagement>
+                  
+      <build>
+                        
+        <plugins>
+                              
+          <plugin>
+                                    
+            <groupId>org.apache.maven.plugins</groupId>
+                                    
+            <artifactId>maven-javadoc-plugin</artifactId>
+                                    
+            <version>${mvn.javadoc.plugin.version}</version>
+                                    
+            <configuration>
+                                          
+              <failOnError>false</failOnError>
+                                          
+              <notimestamp>true</notimestamp>
+                                      
+            </configuration>
+                                    
+            <executions>
+                                          
+              <execution>
+                                                
+                <id>attach-javadocs</id>
+                                                
+                <goals>
+                                                      
+                  <goal>jar</goal>
+                                                  
+                </goals>
+                                            
+              </execution>
+                                      
+            </executions>
+                                
+          </plugin>
+                              
+          <plugin>
+                                    
+            <groupId>org.apache.maven.plugins</groupId>
+                                    
+            <artifactId>maven-source-plugin</artifactId>
+                                    
+            <version>${mvn.source.plugin.version}</version>
+                                    
+            <executions>
+                                          
+              <execution>
+                                                
+                <id>attach-sources</id>
+                                                
+                <goals>
+                                                      
+                  <goal>jar-no-fork</goal>
+                                                  
+                </goals>
+                                            
+              </execution>
+                                      
+            </executions>
+                                
+          </plugin>
+                              
+          <plugin>
+                                    
+            <groupId>org.apache.maven.plugins</groupId>
+                                    
+            <artifactId>maven-gpg-plugin</artifactId>
+                                    
+            <version>3.2.4</version>
+                                    
+            <executions>
+                                          
+              <execution>
+                                                
+                <id>sign-artifacts</id>
+                                                
+                <phase>verify</phase>
+                                                
+                <goals>
+                                                      
+                  <goal>sign</goal>
+                                                  
+                </goals>
+                                                
                 <configuration>
-                    <configLocation>checkstyle.xml</configLocation>
-                    <encoding>UTF-8</encoding>
-                    <consoleOutput>true</consoleOutput>
-                    <failsOnError>true</failsOnError>
-                    <linkXRef>false</linkXRef>
+                                                      
+                  <!-- Prevent gpg from using pinentry programs https://github.com/actions/setup-java/issues/83-->
+                                                      
+                  <gpgArguments>
+                                                            
+                    <arg>--pinentry-mode</arg>
+                                                            
+                    <arg>loopback</arg>
+                                                        
+                  </gpgArguments>
+                                                  
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>validate</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>license-maven-plugin</artifactId>
-                <version>2.4.0</version>
-                <configuration>
-                    <verbose>false</verbose>
-                    <addSvnKeyWords>false</addSvnKeyWords>
-                    <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>first</id>
-                        <goals>
-                            <goal>update-file-header</goal>
-                        </goals>
-                        <phase>process-sources</phase>
-                        <configuration>
-                            <licenseName>apache_v2</licenseName>
-                            <roots>
-                                <root>src/main/java</root>
-                                <root>src/test</root>
-                            </roots>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin.version}</version>
-                <configuration>
-                    <!-- required if you want to report source code names of property method parameters -->
-                    <compilerArgs>
-                        <arg>-parameters</arg>
-                    </compilerArgs>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${surefire.failsafe.version}</version>
-                <configuration>
-                    <excludes>
-                        <exclude>*IntegTest</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>${surefire.failsafe.version}</version>
-                <configuration>
-                    <forkCount>3C</forkCount>
-                    <reuseForks>false</reuseForks>
-                    <includes>
-                        <include>*IntegTest</include>
-                    </includes>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${mvn.javadoc.plugin.version}</version>
-                <configuration>
-                    <failOnError>false</failOnError>
-                    <notimestamp>true</notimestamp>
-                </configuration>
-            </plugin>
+                                            
+              </execution>
+                                      
+            </executions>
+                                
+          </plugin>
+                              
+          <plugin>
+                                    
+            <groupId>org.sonatype.plugins</groupId>
+                                    
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+                                    
+            <version>1.7.0</version>
+                                    
+            <extensions>true</extensions>
+                                    
+            <configuration>
+                                          
+              <serverId>ossrh</serverId>
+                                          
+              <nexusUrl>https://aws.oss.sonatype.org</nexusUrl>
+                                          
+              <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                                      
+            </configuration>
+                                
+          </plugin>
+                          
         </plugins>
-    </build>
-    <profiles>
-        <profile>
-            <id>release</id>
-            <distributionManagement>
-                <snapshotRepository>
-                    <id>ossrh</id>
-                    <url>https://aws.oss.sonatype.org/content/repositories/snapshots</url>
-                </snapshotRepository>
-                <repository>
-                    <id>ossrh</id>
-                    <url>https://aws.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-                </repository>
-            </distributionManagement>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>${mvn.javadoc.plugin.version}</version>
-                        <configuration>
-                            <failOnError>false</failOnError>
-                            <notimestamp>true</notimestamp>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>attach-javadocs</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>${mvn.source.plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.2.4</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                                <configuration>
-                                    <!-- Prevent gpg from using pinentry programs https://github.com/actions/setup-java/issues/83-->
-                                    <gpgArguments>
-                                        <arg>--pinentry-mode</arg>
-                                        <arg>loopback</arg>
-                                    </gpgArguments>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.7.0</version>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <serverId>ossrh</serverId>
-                            <nexusUrl>https://aws.oss.sonatype.org</nexusUrl>
-                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+                    
+      </build>
+              
+    </profile>
+        
+  </profiles>
+  
 </project>
