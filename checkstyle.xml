@@ -12,10 +12,6 @@
         <property name="message" value="Line contains carriage return" />
     </module>
     <module name="RegexpMultiline">
-        <property name="format" value="\{\n\n" />
-        <property name="message" value="Blank line after opening brace" />
-    </module>
-    <module name="RegexpMultiline">
         <property name="format" value="\n\n\s*\}" />
         <property name="message" value="Blank line before closing brace" />
     </module>
@@ -82,7 +78,7 @@
         <module name="TypecastParenPad" />
         <module name="NeedBraces" />
         <module name="LeftCurly">
-            <property name="option" value="nl" />
+            <property name="option" value="eol" />
             <property name="tokens" value="CLASS_DEF, CTOR_DEF, INTERFACE_DEF, METHOD_DEF" />
         </module>
         <module name="LeftCurly">
@@ -92,7 +88,7 @@
                  LITERAL_IF, LITERAL_SWITCH, LITERAL_SYNCHRONIZED, LITERAL_TRY, LITERAL_WHILE" />
         </module>
         <module name="RightCurly">
-            <property name="option" value="alone" />
+            <property name="option" value="same" />
         </module>
         <module name="GenericWhitespace" />
         <module name="WhitespaceAfter" />
@@ -130,7 +126,7 @@
         <module name="UnusedImports" />
         <module name="ImportOrder">
             <property name="groups" value="*,javax,java" />
-            <property name="separated" value="true" />
+            <property name="separated" value="false" />
             <property name="option" value="bottom" />
             <property name="sortStaticImportsAlphabetically" value="true" />
         </module>
