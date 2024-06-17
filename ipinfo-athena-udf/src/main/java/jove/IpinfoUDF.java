@@ -40,6 +40,63 @@ public class IpinfoUDF extends UserDefinedFunctionHandler {
             .build();
     }
 
+    String toJson(IPResponse response) {
+        return (
+            response.getBogon()
+                ? "{" +
+                "\"ip\":\"" +
+                response.getIp() +
+                '\"' +
+                ", \"bogon\":\"" +
+                response.getBogon() +
+                '\"' +
+                "}"
+                : "{" +
+                "\"ip\":\"" +
+                response.getIp() +
+                '\"' +
+                ", \"hostname\":\"" +
+                response.getHostname() +
+                '\"' +
+                ", \"anycast\":\"" +
+                response.getAnycast() +
+                "\", \"city\":\"" +
+                response.getCity() +
+                '\"' +
+                ", \"region\":\"" +
+                response.getRegion() +
+                '\"' +
+                ", \"country\":\"" +
+                response.getCountryName() +
+                '\"' +
+                ", \"loc\":\"" +
+                response.getLocation() +
+                '\"' +
+                ", \"org\":\"" +
+                response.getOrg() +
+                '\"' +
+                ", \"postal\":\"" +
+                response.getPostal() +
+                '\"' +
+                ", \"timezone\":\"" +
+                response.getTimezone() +
+                '\"' +
+                ", \"asn\":\"" +
+                response.getAsn() +
+                "\", \"company\":\"" +
+                response.getCompany() +
+                "\", \"carrier\":\"" +
+                response.getCarrier() +
+                "\", \"privacy\":\"" +
+                response.getPrivacy() +
+                "\", \"abuse\":\"" +
+                response.getAbuse() +
+                "\", \"domains\":\"" +
+                response.getDomains() +
+                "\"}"
+        );
+    }
+
     /**
      * ipinfo
      *
@@ -49,7 +106,7 @@ public class IpinfoUDF extends UserDefinedFunctionHandler {
     public String ip_lookup(String input) throws RateLimitedException {
         IPResponse response = ipInfo.lookupIP(input);
 
-        return response.toString();
+        return toJson(response);
     }
 
     public static void main(String[] args) throws RateLimitedException {
